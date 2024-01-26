@@ -65,18 +65,29 @@ func generateYupSchemas(n ast.Node) bool {
 			continue
 		}
 
+		start := strings.Index(field.Tag.Value, "validate:")
+		if start < 0 {
+			continue
+		}
+
+		validateTag := field.Tag.Value[start:]
+		end := strings.LastIndex(validateTag, `"`)
+		if end != -1 {
+			validateTag = validateTag[:end]
+		}
+
 		var mapped string
 		if fmt.Sprint(field.Type) == "string" {
-			mapped = mapStringTag(field.Tag.Value)
+			mapped = mapStringTag(validateTag)
 		} else if fmt.Sprint(field.Type) == "bool" {
-			mapped = mapBoolTag(field.Tag.Value)
+			mapped = mapBoolTag(validateTag)
 		} else if isIntegerType(field) || isFloatType(field) {
-			mapped = mapNumberTag(field.Tag.Value)
+			mapped = mapNumberTag(validateTag)
 		} else if isTimeField(field) {
-			mapped = mapTimeStructTag(field.Tag.Value)
+			mapped = mapTimeStructTag(validateTag)
 		} else {
 			// default to using a "mixed" field
-			mapped = mapMixedFieldTag(field.Tag.Value)
+			mapped = mapMixedFieldTag(validateTag)
 		}
 
 		sb.WriteString(fmt.Sprintf("\t%s: %s,\n", field.Names[0].Name, mapped))
