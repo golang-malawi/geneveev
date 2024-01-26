@@ -8,16 +8,16 @@ func TestMapString(t *testing.T) {
 		Yup string
 	}{
 		{
-			Tag: "validate:required,min:0,max:255",
-			Yup: "yup.string().required().min().max()",
+			Tag: "validate:required,min=0,max=255",
+			Yup: "yup.string().required().min(0).max(255)",
 		},
 		{
-			Tag: "validate:required,min:0,max:255,email",
-			Yup: "yup.string().required().email().min().max()",
+			Tag: "validate:required,min=0,max=255,email",
+			Yup: "yup.string().required().email().min(0).max(255)",
 		},
 		{
-			Tag: "validate:min:0,max:255",
-			Yup: "yup.string().optional().min().max()",
+			Tag: "validate:min=0,max=255",
+			Yup: "yup.string().optional().min(0).max(255)",
 		},
 	}
 
@@ -56,12 +56,12 @@ func TestMapNumber(t *testing.T) {
 		Yup string
 	}{
 		{
-			Tag: "validate:required,min:0,max:255",
-			Yup: "yup.number().required().min().max()",
+			Tag: "validate:required,min=0,max=255",
+			Yup: "yup.number().required().min(0).max(255)",
 		},
 		{
-			Tag: "validate:min:0,max:255",
-			Yup: "yup.number().optional().min().max()",
+			Tag: "validate:min=0,max=255",
+			Yup: "yup.number().optional().min(0).max(255)",
 		},
 	}
 
