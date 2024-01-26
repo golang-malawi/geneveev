@@ -63,6 +63,16 @@ func mapBoolTag(tagValue string) string {
 	return fmt.Sprintf("yup.bool().%s", strings.Join(yupExprs, "."))
 }
 
+func mapMixedFieldTag(tagValue string) string {
+	yupExprs := make([]string, 0)
+	if strings.Index(tagValue, "required") >= 0 {
+		yupExprs = append(yupExprs, "required()")
+	} else {
+		yupExprs = append(yupExprs, "optional()")
+	}
+	return fmt.Sprintf("yup.mixed().%s", strings.Join(yupExprs, "."))
+}
+
 func mapNumberTag(tagValue string) string {
 	yupExprs := make([]string, 0)
 	if strings.Index(tagValue, "required") >= 0 {

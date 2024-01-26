@@ -2,12 +2,16 @@ package testdata
 
 import "time"
 
+type UnknownType string
+
 type Person struct {
 	FirstName string `validate:"required,min:2,max:255"`
 	LastName  string `validate:"required"`
 	Email     string `validate:"required,email,max:255"`
 
 	DateOfBirth time.Time `validate:required`
+
+	SecretIdentity UnknownType `validate:required`
 
 	Registered bool `validate:"required"`
 

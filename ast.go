@@ -68,18 +68,15 @@ func generateYupSchemas(n ast.Node) bool {
 		var mapped string
 		if fmt.Sprint(field.Type) == "string" {
 			mapped = mapStringTag(field.Tag.Value)
-		}
-
-		if fmt.Sprint(field.Type) == "bool" {
+		} else if fmt.Sprint(field.Type) == "bool" {
 			mapped = mapBoolTag(field.Tag.Value)
-		}
-
-		if isIntegerType(field) || isFloatType(field) {
+		} else if isIntegerType(field) || isFloatType(field) {
 			mapped = mapNumberTag(field.Tag.Value)
-		}
-
-		if isTimeField(field) {
+		} else if isTimeField(field) {
 			mapped = mapTimeStructTag(field.Tag.Value)
+		} else {
+			// default to using a "mixed" field
+			mapped = mapMixedFieldTag(field.Tag.Value)
 		}
 
 		sb.WriteString(fmt.Sprintf("\t%s: %s,\n", field.Names[0].Name, mapped))
