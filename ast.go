@@ -66,7 +66,7 @@ func generateYupSchemas(n ast.Node) bool {
 		}
 
 		start := strings.Index(field.Tag.Value, "validate:")
-		if start < 0 {
+		if start <= 0 {
 			continue
 		}
 

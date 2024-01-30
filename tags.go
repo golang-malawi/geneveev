@@ -32,21 +32,21 @@ func parseMaxTagValue(tagValue string) string {
 
 func mapStringTag(tagValue string) string {
 	yupExprs := make([]string, 0)
-	if strings.Index(tagValue, "required") >= 0 {
+	if strings.Index(tagValue, "required") != -1 {
 		yupExprs = append(yupExprs, "required()")
 	} else {
 		yupExprs = append(yupExprs, "optional()")
 	}
 
-	if strings.Index(tagValue, "email") >= 0 {
+	if strings.Index(tagValue, "email") != -1 {
 		yupExprs = append(yupExprs, "email()")
 	}
 
-	if strings.Index(tagValue, "min") >= 0 {
+	if strings.Index(tagValue, "min") != -1 {
 		yupExprs = append(yupExprs, parseMinTagValue(tagValue))
 	}
 
-	if strings.Index(tagValue, "max") >= 0 {
+	if strings.Index(tagValue, "max") != -1 {
 		yupExprs = append(yupExprs, parseMaxTagValue(tagValue))
 	}
 
@@ -65,7 +65,7 @@ func mapBoolTag(tagValue string) string {
 
 func mapMixedFieldTag(tagValue string) string {
 	yupExprs := make([]string, 0)
-	if strings.Index(tagValue, "required") >= 0 {
+	if strings.Index(tagValue, "required") != -1 {
 		yupExprs = append(yupExprs, "required()")
 	} else {
 		yupExprs = append(yupExprs, "optional()")
@@ -75,17 +75,17 @@ func mapMixedFieldTag(tagValue string) string {
 
 func mapNumberTag(tagValue string) string {
 	yupExprs := make([]string, 0)
-	if strings.Index(tagValue, "required") >= 0 {
+	if strings.Index(tagValue, "required") != -1 {
 		yupExprs = append(yupExprs, "required()")
 	} else {
 		yupExprs = append(yupExprs, "optional()")
 	}
 
-	if strings.Index(tagValue, "min") >= 0 {
+	if strings.Index(tagValue, "min") != -1 {
 		yupExprs = append(yupExprs, parseMinTagValue(tagValue))
 	}
 
-	if strings.Index(tagValue, "max") >= 0 {
+	if strings.Index(tagValue, "max") != -1 {
 		yupExprs = append(yupExprs, parseMaxTagValue(tagValue))
 	}
 
@@ -94,17 +94,17 @@ func mapNumberTag(tagValue string) string {
 
 func mapTimeStructTag(tagValue string) string {
 	yupExprs := make([]string, 0)
-	if strings.Index(tagValue, "required") >= 0 {
+	if strings.Index(tagValue, "required") != -1 {
 		yupExprs = append(yupExprs, "required()")
 	} else {
 		yupExprs = append(yupExprs, "optional()")
 	}
 
-	if strings.Index(tagValue, "min") >= 0 {
+	if strings.Index(tagValue, "min") != -1 {
 		yupExprs = append(yupExprs, parseMinTagValue(tagValue))
 	}
 
-	if strings.Index(tagValue, "max") >= 0 {
+	if strings.Index(tagValue, "max") != -1 {
 		yupExprs = append(yupExprs, parseMaxTagValue(tagValue))
 	}
 
