@@ -9,10 +9,13 @@ import (
 
 var (
 	packageDir string
+	outputDir  string
+	outputFile string
 )
 
 func init() {
 	flag.StringVar(&packageDir, "d", "", "directory to parse structs from")
+	flag.StringVar(&outputDir, "output-dir", "", "directory to place generated code")
 }
 
 func main() {
