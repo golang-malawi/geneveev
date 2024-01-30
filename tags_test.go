@@ -38,6 +38,10 @@ func TestMapBool(t *testing.T) {
 			Yup: "yup.bool().required()",
 		},
 		{
+			Tag: "validate:something,required",
+			Yup: "yup.bool().required()",
+		},
+		{
 			Tag: "validate:",
 			Yup: "yup.bool().optional()",
 		},

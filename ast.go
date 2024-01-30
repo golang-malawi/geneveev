@@ -1,8 +1,11 @@
 package main
 
 import (
+	"errors"
 	"fmt"
 	"go/ast"
+	"os"
+	"path/filepath"
 	"regexp"
 	"strings"
 )
@@ -54,10 +57,7 @@ func generateYupSchemas(n ast.Node) bool {
 		return true
 	}
 
-	var sb strings.Builder
-	sb.WriteString("const ")
-	sb.WriteString(t.Name.Name + "Schema")
-	sb.WriteString(" = yup.object({\n")
+	schema := NewSchema(t.Name.Name)
 
 	// fmt.Println("DEBUG: processing type", t.Name.Name)
 	for _, field := range s.Fields.List {
@@ -66,7 +66,7 @@ func generateYupSchemas(n ast.Node) bool {
 		}
 
 		start := strings.Index(field.Tag.Value, "validate:")
-		if start < 0 {
+		if start <= 0 {
 			continue
 		}
 
@@ -76,24 +76,35 @@ func generateYupSchemas(n ast.Node) bool {
 			validateTag = validateTag[:end]
 		}
 
-		var mapped string
+		fieldName := field.Names[0].Name
 		if fmt.Sprint(field.Type) == "string" {
-			mapped = mapStringTag(validateTag)
+			schema.AddStringField(fieldName, mapStringTag(validateTag))
 		} else if fmt.Sprint(field.Type) == "bool" {
-			mapped = mapBoolTag(validateTag)
+			schema.AddBoolField(fieldName, mapBoolTag(validateTag))
 		} else if isIntegerType(field) || isFloatType(field) {
-			mapped = mapNumberTag(validateTag)
+			schema.AddNumberField(fieldName, mapNumberTag(validateTag))
 		} else if isTimeField(field) {
-			mapped = mapTimeStructTag(validateTag)
+			schema.AddTimeField(fieldName, mapTimeStructTag(validateTag))
 		} else {
 			// default to using a "mixed" field
-			mapped = mapMixedFieldTag(validateTag)
+			schema.AddMixedField(fieldName, mapMixedFieldTag(validateTag))
 		}
-
-		sb.WriteString(fmt.Sprintf("\t%s: %s,\n", field.Names[0].Name, mapped))
 	}
-	sb.WriteString("})\n")
 
-	fmt.Println(sb.String())
+	if outputDir != "" {
+		err := os.Mkdir(filepath.Join(outputDir), 0o775)
+		if err != nil {
+			if !errors.Is(err, os.ErrExist) {
+				panic(err)
+			}
+		}
+		err = os.WriteFile(filepath.Join(outputDir, schema.Filename()), []byte(schema.ToJS()), os.FileMode(0o777))
+		if err != nil {
+			panic(err)
+		}
+		return false
+	}
+
+	fmt.Println(schema.ToJS())
 	return false
 }
