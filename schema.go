@@ -17,24 +17,30 @@ func NewSchema(name string) *Schema {
 	}
 }
 
+func (s *Schema) addEntry(name, expr string) {
+	if name != "" && expr != "" {
+		s.Fields[name] = expr
+	}
+}
+
 func (s *Schema) AddBoolField(name, yupExpression string) {
-	s.Fields[name] = yupExpression
+	s.addEntry(name, yupExpression)
 }
 
 func (s *Schema) AddStringField(name, yupExpression string) {
-	s.Fields[name] = yupExpression
+	s.addEntry(name, yupExpression)
 }
 
 func (s *Schema) AddNumberField(name, yupExpression string) {
-	s.Fields[name] = yupExpression
+	s.addEntry(name, yupExpression)
 }
 
 func (s *Schema) AddTimeField(name, yupExpression string) {
-	s.Fields[name] = yupExpression
+	s.addEntry(name, yupExpression)
 }
 
 func (s *Schema) AddMixedField(name, yupExpression string) {
-	s.Fields[name] = yupExpression
+	s.addEntry(name, yupExpression)
 }
 
 func (s *Schema) Name() string {
