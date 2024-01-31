@@ -30,8 +30,12 @@ func TestName(t *testing.T) {
 func TestFilename(t *testing.T) {
 	schema := NewSchema("test")
 
-	if schema.Filename() != "test_schema.js" {
+	if schema.Filename(true) != "test_schema.js" {
 		t.Error("expected Schema.Filename() to return 'test_schema.js'")
+	}
+
+	if schema.Filename(false) != "testSchema.js" {
+		t.Error("expected Schema.Filename() to return 'testSchema.js'")
 	}
 }
 

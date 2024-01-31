@@ -47,8 +47,16 @@ func (s *Schema) Name() string {
 	return s.name + "Schema"
 }
 
-func (s *Schema) Filename() string {
-	return strings.ToLower(s.name + "_schema" + ".js")
+func (s *Schema) Filename(snakecase bool) string {
+	if snakecase {
+		return strings.ToLower(s.name + "_schema" + ".js")
+	}
+
+	return strings.ToUpper(string(s.Name()[0])) + s.Name()[1:] + ".js"
+}
+
+func (s *Schema) IsEmpty() bool {
+	return len(s.Fields) < 1
 }
 
 func (s *Schema) ToJS() string {
