@@ -102,7 +102,7 @@ func generateYupSchemas(n ast.Node) bool {
 				panic(err)
 			}
 		}
-		err = os.WriteFile(filepath.Join(outputDir, schema.Filename(snakeCase)), []byte(schema.ToJS()), os.FileMode(0o777))
+		err = os.WriteFile(filepath.Join(outputDir, schema.Filename(snakeCase)), []byte(schema.ToJSFile()), os.FileMode(0o777))
 		if err != nil {
 			panic(err)
 		}

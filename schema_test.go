@@ -1,6 +1,8 @@
 package main
 
-import "testing"
+import (
+	"testing"
+)
 
 func TestNewSchema(t *testing.T) {
 	schema := NewSchema("test")
@@ -34,8 +36,8 @@ func TestFilename(t *testing.T) {
 		t.Error("expected Schema.Filename() to return 'test_schema.js'")
 	}
 
-	if schema.Filename(false) != "testSchema.js" {
-		t.Error("expected Schema.Filename() to return 'testSchema.js'")
+	if schema.Filename(false) != "TestSchema.js" {
+		t.Error("expected Schema.Filename() to return 'TestSchema.js'")
 	}
 }
 
@@ -44,10 +46,22 @@ func TestToJS(t *testing.T) {
 
 	schema.addEntry("fieldName", "yup.bool()")
 
-	expected := "export const testSchema = yup.object({\n\tfieldName: yup.bool(),\n})\n"
+	expected := "const testSchema = yup.object({\n\tfieldName: yup.bool(),\n})\n"
 
 	if expected != schema.ToJS() {
 		t.Errorf("failed to match \nwant=%s\nhave=%s", expected, schema.ToJS())
+	}
+}
+
+func TestToJSFile(t *testing.T) {
+	schema := NewSchema("test")
+
+	schema.addEntry("fieldName", "yup.bool()")
+
+	expected := "import yup from 'yup';\n\nconst testSchema = yup.object({\n\tfieldName: yup.bool(),\n})\n\nexport default testSchema;\n"
+
+	if expected != schema.ToJSFile() {
+		t.Errorf("failed to match \nwant=%s\nhave=%s", expected, schema.ToJSFile())
 	}
 
 }

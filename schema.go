@@ -61,7 +61,7 @@ func (s *Schema) IsEmpty() bool {
 
 func (s *Schema) ToJS() string {
 	var sb strings.Builder
-	sb.WriteString("export const ")
+	sb.WriteString("const ")
 	sb.WriteString(s.Name())
 	sb.WriteString(" = yup.object({\n")
 
@@ -70,6 +70,16 @@ func (s *Schema) ToJS() string {
 	}
 
 	sb.WriteString("})\n")
+
+	return sb.String()
+}
+
+func (s *Schema) ToJSFile() string {
+	var sb strings.Builder
+	sb.WriteString("import yup from 'yup';\n\n")
+	sb.WriteString(s.ToJS())
+	sb.WriteString("\nexport default ")
+	sb.WriteString(s.Name() + ";\n")
 
 	return sb.String()
 }
