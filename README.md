@@ -19,6 +19,16 @@ go install github.com/golang-malawi/geneveev@latest
 $ geneveev -d /path/to/package/with/validated/structs/
 ```
 
+## Example
+
+Generate from this
+
+![[]](./struct.png)
+
+To this:
+
+![[]](./yup.png)
+
 ## Features
 
 - [x] Generates basic yup object schemas from basic Go structs
