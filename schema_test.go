@@ -58,7 +58,7 @@ func TestToJSFile(t *testing.T) {
 
 	schema.addEntry("fieldName", "yup.bool()")
 
-	expected := "import yup from 'yup';\n\nconst testSchema = yup.object({\n\tfieldName: yup.bool(),\n})\n\nexport default testSchema;\n"
+	expected := "import * as yup from 'yup';\n\nconst testSchema = yup.object({\n\tfieldName: yup.bool(),\n})\n\nexport default testSchema;\n"
 
 	if expected != schema.ToJSFile() {
 		t.Errorf("failed to match \nwant=%s\nhave=%s", expected, schema.ToJSFile())

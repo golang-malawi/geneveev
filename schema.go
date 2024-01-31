@@ -76,7 +76,7 @@ func (s *Schema) ToJS() string {
 
 func (s *Schema) ToJSFile() string {
 	var sb strings.Builder
-	sb.WriteString("import yup from 'yup';\n\n")
+	sb.WriteString("import * as yup from 'yup';\n\n")
 	sb.WriteString(s.ToJS())
 	sb.WriteString("\nexport default ")
 	sb.WriteString(s.Name() + ";\n")
