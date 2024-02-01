@@ -22,7 +22,7 @@ func TestMapString(t *testing.T) {
 	}
 
 	for _, testCase := range tags {
-		if testCase.Yup != mapStringTag(testCase.Tag) {
+		if testCase.Yup != Yup().mapStringTag(testCase.Tag) {
 			t.Errorf("failed to map tag=%s to yup expression", testCase.Tag)
 		}
 	}
@@ -48,7 +48,7 @@ func TestMapBool(t *testing.T) {
 	}
 
 	for _, testCase := range tags {
-		if testCase.Yup != mapBoolTag(testCase.Tag) {
+		if testCase.Yup != Yup().mapBoolTag(testCase.Tag) {
 			t.Errorf("failed to map tag=%s to yup expression", testCase.Tag)
 		}
 	}
@@ -70,7 +70,7 @@ func TestMapNumber(t *testing.T) {
 	}
 
 	for _, testCase := range tags {
-		if testCase.Yup != mapNumberTag(testCase.Tag) {
+		if testCase.Yup != Yup().mapNumberTag(testCase.Tag) {
 			t.Errorf("failed to map tag=%s to yup expression", testCase.Tag)
 		}
 	}
