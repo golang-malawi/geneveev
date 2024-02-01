@@ -20,82 +20,82 @@ func (z *zod) object() string {
 }
 
 func (z *zod) mapStringTag(tagValue string) string {
-	yupExprs := make([]string, 0)
+	zodExprs := make([]string, 0)
 	if strings.Index(tagValue, "required") != -1 {
-		yupExprs = append(yupExprs, "required()")
+		zodExprs = append(zodExprs, "required()")
 	} else {
-		yupExprs = append(yupExprs, "optional()")
+		zodExprs = append(zodExprs, "optional()")
 	}
 
 	if strings.Index(tagValue, "email") != -1 {
-		yupExprs = append(yupExprs, "email()")
+		zodExprs = append(zodExprs, "email()")
 	}
 
 	if strings.Index(tagValue, "min") != -1 {
-		yupExprs = append(yupExprs, parseMinTagValue(tagValue))
+		zodExprs = append(zodExprs, parseMinTagValue(tagValue))
 	}
 
 	if strings.Index(tagValue, "max") != -1 {
-		yupExprs = append(yupExprs, parseMaxTagValue(tagValue))
+		zodExprs = append(zodExprs, parseMaxTagValue(tagValue))
 	}
 
-	return fmt.Sprintf("z.string().%s", strings.Join(yupExprs, "."))
+	return fmt.Sprintf("z.string().%s", strings.Join(zodExprs, "."))
 }
 
 func (z *zod) mapBoolTag(tagValue string) string {
-	yupExprs := make([]string, 0)
+	zodExprs := make([]string, 0)
 	if strings.Index(tagValue, "required") >= 0 {
-		yupExprs = append(yupExprs, "required()")
+		zodExprs = append(zodExprs, "required()")
 	} else {
-		yupExprs = append(yupExprs, "optional()")
+		zodExprs = append(zodExprs, "optional()")
 	}
-	return fmt.Sprintf("z.boolean().%s", strings.Join(yupExprs, "."))
+	return fmt.Sprintf("z.boolean().%s", strings.Join(zodExprs, "."))
 }
 
 func (z *zod) mapMixedFieldTag(tagValue string) string {
-	yupExprs := make([]string, 0)
+	zodExprs := make([]string, 0)
 	if strings.Index(tagValue, "required") != -1 {
-		yupExprs = append(yupExprs, "required()")
+		zodExprs = append(zodExprs, "required()")
 	} else {
-		yupExprs = append(yupExprs, "optional()")
+		zodExprs = append(zodExprs, "optional()")
 	}
-	return fmt.Sprintf("z.mixed().%s", strings.Join(yupExprs, "."))
+	return fmt.Sprintf("z.mixed().%s", strings.Join(zodExprs, "."))
 }
 
 func (z *zod) mapNumberTag(tagValue string) string {
-	yupExprs := make([]string, 0)
+	zodExprs := make([]string, 0)
 	if strings.Index(tagValue, "required") != -1 {
-		yupExprs = append(yupExprs, "required()")
+		zodExprs = append(zodExprs, "required()")
 	} else {
-		yupExprs = append(yupExprs, "optional()")
+		zodExprs = append(zodExprs, "optional()")
 	}
 
 	if strings.Index(tagValue, "min") != -1 {
-		yupExprs = append(yupExprs, parseMinTagValue(tagValue))
+		zodExprs = append(zodExprs, parseMinTagValue(tagValue))
 	}
 
 	if strings.Index(tagValue, "max") != -1 {
-		yupExprs = append(yupExprs, parseMaxTagValue(tagValue))
+		zodExprs = append(zodExprs, parseMaxTagValue(tagValue))
 	}
 
-	return fmt.Sprintf("z.number().%s", strings.Join(yupExprs, "."))
+	return fmt.Sprintf("z.number().%s", strings.Join(zodExprs, "."))
 }
 
 func (z *zod) mapTimeStructTag(tagValue string) string {
-	yupExprs := make([]string, 0)
+	zodExprs := make([]string, 0)
 	if strings.Index(tagValue, "required") != -1 {
-		yupExprs = append(yupExprs, "required()")
+		zodExprs = append(zodExprs, "required()")
 	} else {
-		yupExprs = append(yupExprs, "optional()")
+		zodExprs = append(zodExprs, "optional()")
 	}
 
 	if strings.Index(tagValue, "min") != -1 {
-		yupExprs = append(yupExprs, parseMinTagValue(tagValue))
+		zodExprs = append(zodExprs, parseMinTagValue(tagValue))
 	}
 
 	if strings.Index(tagValue, "max") != -1 {
-		yupExprs = append(yupExprs, parseMaxTagValue(tagValue))
+		zodExprs = append(zodExprs, parseMaxTagValue(tagValue))
 	}
 
-	return fmt.Sprintf("z.date().%s", strings.Join(yupExprs, "."))
+	return fmt.Sprintf("z.date().%s", strings.Join(zodExprs, "."))
 }
