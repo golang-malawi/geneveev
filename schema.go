@@ -59,11 +59,9 @@ func (s *Schema) IsEmpty() bool {
 	return len(s.Fields) < 1
 }
 
-func (s *Schema) ToJS() string {
+func (s *Schema) ToJS(m mapper) string {
 	var sb strings.Builder
-	sb.WriteString("const ")
-	sb.WriteString(s.Name())
-	sb.WriteString(" = yup.object({\n")
+	sb.WriteString(fmt.Sprintf("const %s = %s({\n", s.Name(), m.object()))
 
 	for fieldName, expr := range s.Fields {
 		sb.WriteString(fmt.Sprintf("\t%s: %s,\n", fieldName, expr))
@@ -74,10 +72,10 @@ func (s *Schema) ToJS() string {
 	return sb.String()
 }
 
-func (s *Schema) ToJSFile() string {
+func (s *Schema) ToJSFile(m mapper) string {
 	var sb strings.Builder
-	sb.WriteString("import * as yup from 'yup';\n\n")
-	sb.WriteString(s.ToJS())
+	sb.WriteString(m.jsImport() + ";\n\n")
+	sb.WriteString(s.ToJS(m))
 	sb.WriteString("\nexport default ")
 	sb.WriteString(s.Name() + ";\n")
 

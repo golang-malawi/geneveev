@@ -48,8 +48,8 @@ func TestToJS(t *testing.T) {
 
 	expected := "const testSchema = yup.object({\n\tfieldName: yup.bool(),\n})\n"
 
-	if expected != schema.ToJS() {
-		t.Errorf("failed to match \nwant=%s\nhave=%s", expected, schema.ToJS())
+	if expected != schema.ToJS(Yup()) {
+		t.Errorf("failed to match \nwant=%s\nhave=%s", expected, schema.ToJS(Yup()))
 	}
 }
 
@@ -60,8 +60,8 @@ func TestToJSFile(t *testing.T) {
 
 	expected := "import * as yup from 'yup';\n\nconst testSchema = yup.object({\n\tfieldName: yup.bool(),\n})\n\nexport default testSchema;\n"
 
-	if expected != schema.ToJSFile() {
-		t.Errorf("failed to match \nwant=%s\nhave=%s", expected, schema.ToJSFile())
+	if expected != schema.ToJSFile(Yup()) {
+		t.Errorf("failed to match \nwant=%s\nhave=%s", expected, schema.ToJSFile(Yup()))
 	}
 
 }
