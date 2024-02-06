@@ -7,19 +7,19 @@ import (
 
 type Schema struct {
 	name   string
-	Fields map[string]string
+	Fields []string
 }
 
 func NewSchema(name string) *Schema {
 	return &Schema{
 		name:   name,
-		Fields: make(map[string]string),
+		Fields: make([]string, 0),
 	}
 }
 
 func (s *Schema) addEntry(name, expr string) {
 	if name != "" && expr != "" {
-		s.Fields[name] = expr
+		s.Fields = append(s.Fields, fmt.Sprintf("%s: %s,", name, expr))
 	}
 }
 
@@ -63,8 +63,8 @@ func (s *Schema) ToJS(m mapper) string {
 	var sb strings.Builder
 	sb.WriteString(fmt.Sprintf("const %s = %s({\n", s.Name(), m.object()))
 
-	for fieldName, expr := range s.Fields {
-		sb.WriteString(fmt.Sprintf("\t%s: %s,\n", fieldName, expr))
+	for _, expr := range s.Fields {
+		sb.WriteString(fmt.Sprintf("\t%s\n", expr))
 	}
 
 	sb.WriteString("})\n")
