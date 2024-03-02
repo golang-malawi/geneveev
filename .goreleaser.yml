@@ -1,0 +1,21 @@
+builds:
+  - main: main.go
+    id: "geneveev"
+    binary: geneveev
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - darwin
+      - windows
+    flags:
+      - -a
+    ldflags:
+      - -s -w -X main.version=v{{.Version}} -X main.commit={{.Commit}} -X main.date={{.Date}}
+    goarch:
+      - amd64
+    hooks:
+      post: cp example.grope.yaml .grope.yaml
+archives:
+  - format: zip
+    name_template: "geneveev_{{ .Os }}_{{ .Arch }}_v{{ .Version }}"
