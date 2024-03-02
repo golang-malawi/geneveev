@@ -31,7 +31,6 @@ func generateFieldJSONKey(writer io.Writer, f *types.Var, tag string, registry *
 		fmt.Fprint(writer, "@JsonKey(")
 		first := true
 
-		// keys := maps.Keys(keyProperties)
 		keys := make([]string, 0)
 		for key, _ := range keyProperties {
 			keys = append(keys, key)
