@@ -56,7 +56,7 @@ func isTimeField(field *ast.Field) bool {
 	return fmt.Sprint(field.Type) == "&{time Time}"
 }
 
-func generator(m mapper) func(n ast.Node) bool {
+func generator(m mapper, snakeCase bool, outputDir string) func(n ast.Node) bool {
 	return func(n ast.Node) bool {
 		t, ok := n.(*ast.TypeSpec)
 		if !ok {

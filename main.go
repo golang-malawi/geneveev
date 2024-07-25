@@ -1,36 +1,34 @@
 package main
 
 import (
-	"flag"
 	"fmt"
 	"go/ast"
 	"go/parser"
 	"go/token"
 	"os"
 
+	"github.com/alecthomas/kong"
 	dartGenerator "github.com/golang-malawi/geneveev/11wizards/go-to-dart/generator"
 	"github.com/golang-malawi/geneveev/11wizards/go-to-dart/generator/options"
 )
 
-var (
-	packageDir string
-	outputDir  string
-	snakeCase  bool
-	zodMode    bool
-	dartMode   bool
-)
-
-func init() {
-	flag.StringVar(&packageDir, "d", "", "directory to parse structs from")
-	flag.StringVar(&outputDir, "output-dir", "", "directory to place generated code")
-	flag.BoolVar(&snakeCase, "snakecase", false, "whether to name files as snake_case")
-	flag.BoolVar(&zodMode, "zod", false, "whether to generate zod schemas or not")
-	flag.BoolVar(&dartMode, "dart", false, "whether to generate Dart classes or not")
+type Context struct {
+	Debug bool
 }
 
-func main() {
-	flag.Parse()
+type LsCmd struct {
+	Paths []string `arg:"" optional:"" name:"path" help:"Paths to list." type:"path"`
+}
 
+type GenerateCmd struct {
+	Format     string `arg:"" type:"string" help:"Which format to generate to"`
+	PackageDir string `name:"d" type:"path" help:"package containing structs to generate from"`
+	OutputDir  string `name:"" type:"path"`
+	Snakecase  bool   `name:"" help:"whether to name files as snake_case"`
+}
+
+func (g *GenerateCmd) Run(ctx *Context) error {
+	packageDir := g.PackageDir
 	fset := token.NewFileSet()
 	packages, err := parser.ParseDir(fset, packageDir, nil, parser.ParseComments)
 	if err != nil {
@@ -38,11 +36,11 @@ func main() {
 	}
 
 	for _, file := range packages {
-		if dartMode {
-
+		switch g.Format {
+		case "dart":
 			o := options.Options{
 				Input:   packageDir,
-				Output:  outputDir,
+				Output:  g.OutputDir,
 				Imports: []string{},
 				Mode:    options.Mode(options.JSON),
 			}
@@ -52,12 +50,26 @@ func main() {
 				os.Exit(1)
 			}
 			dartGenerator.Run(o)
-		}
-
-		if zodMode {
-			ast.Inspect(file, generator(Zod()))
-		} else {
-			ast.Inspect(file, generator(Yup()))
+			break
+		case "zod":
+			ast.Inspect(file, generator(Zod(), g.Snakecase, g.OutputDir))
+			break
+		case "yup":
+			ast.Inspect(file, generator(Yup(), g.Snakecase, g.OutputDir))
+			break
 		}
 	}
+
+	return nil
+}
+
+var cli struct {
+	Debug    bool        `help:"Enable debug mode."`
+	Generate GenerateCmd `cmd:"" help:"Generate subcommand to generate different formats."`
+}
+
+func main() {
+	ctx := kong.Parse(&cli)
+	err := ctx.Run(&Context{Debug: cli.Debug})
+	ctx.FatalIfErrorf(err)
 }
