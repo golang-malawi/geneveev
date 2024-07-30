@@ -16,13 +16,9 @@ type Context struct {
 	Debug bool
 }
 
-type LsCmd struct {
-	Paths []string `arg:"" optional:"" name:"path" help:"Paths to list." type:"path"`
-}
-
 type GenerateCmd struct {
 	Format     string `arg:"" type:"string" help:"Which format to generate to"`
-	PackageDir string `name:"d" type:"path" help:"package containing structs to generate from"`
+	PackageDir string `name:"" short:"d" type:"path" help:"package containing structs to generate from"`
 	OutputDir  string `name:"" type:"path"`
 	Snakecase  bool   `name:"" help:"whether to name files as snake_case"`
 }
