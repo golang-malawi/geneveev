@@ -24,19 +24,19 @@ go install github.com/golang-malawi/geneveev@latest
 **Generating Yup Schemas**
 
 ```sh
-$ geneveev -d /path/to/package/with/validated/structs/ -output-dir ./yup-schemas
+$ geneveev generate yup -d /path/to/package/with/validated/structs/ --output-dir ./yup-schemas
 ```
 
 **Generating Zod Schemas**
 
 ```sh
-$ geneveev -zod -d /path/to/package/with/validated/structs/ -output-dir ./zod-schemas
+$ geneveev generate zod -d /path/to/package/with/validated/structs/ --output-dir ./zod-schemas
 ```
 
 **Generating Dart classes**
 
 ```sh
-$ geneveev -dart -d /path/to/package/with/validated/structs/ -output-dir ./dart-classes
+$ geneveev generate dart -d /path/to/package/with/validated/structs/ --output-dir ./dart-classes
 ```
 
 ## Example
