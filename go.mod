@@ -1,6 +1,6 @@
 module github.com/golang-malawi/geneveev
 
-go 1.21.5
+go 1.24.1
 
 require (
 	github.com/alecthomas/kong v0.9.0

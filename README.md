@@ -2,15 +2,15 @@ geneveev
 ========
 
 A command-line tool to generate object schemas from Go structs.
+`It is useful for generating code for validation for front-end development 
+and for creating DTOs (Data Transfer Objects) interacting with APIs built with Go
 
-Currently it supports generating 
+Currently it supports generating JavaScript and Dart from structs containing [go-playground/validator](https://github.com/go-playground/validator) tags. 
 
- - [Yup](https://yup-docs.vercel.app/docs/Api/yup) and [Zod](https://zod.dev) schemas that use [go-playground/validator](https://github.com/go-playground/validator) tags.
- - Dart classes via the embedded go-to-dart functionality
+ - [Yup](https://yup-docs.vercel.app/docs/Api/yup) schemas
+ - [Zod](https://zod.dev) schemas
+ - [Dart](https://dart.dev) classes via the embedded go-to-dart functionality
 
-Useful for setting up validation for front-end development and for creating Data Transfer objects for Go APIs that have flutter clients
-
-> NOTE: still in very early development
 
 ## Installation
 
