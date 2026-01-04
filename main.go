@@ -28,7 +28,7 @@ func (g *GenerateCmd) Run(ctx *Context) error {
 	fset := token.NewFileSet()
 	packages, err := parser.ParseDir(fset, packageDir, nil, parser.ParseComments)
 	if err != nil {
-		panic(err)
+		return err
 	}
 
 	for _, file := range packages {
@@ -46,6 +46,9 @@ func (g *GenerateCmd) Run(ctx *Context) error {
 				os.Exit(1)
 			}
 			dartGenerator.Run(o)
+			break
+		case "typescript", "ts":
+			generateTypeScriptCode(g.PackageDir, g.OutputDir)
 			break
 		case "zod":
 			ast.Inspect(file, generator(Zod(), g.Snakecase, g.OutputDir))
